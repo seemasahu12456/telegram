@@ -1,76 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Iframe </title>
     <style>
-        html {
-            overflow: auto;
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
         }
 
-        html,
-        body,
-        div,
-        iframe {
-            margin: 0px;
-            padding: 0px;
-            height: 100%;
-            border: none;
-        }
-
-
-
-        iframe {
-            display: block;
-            width: 100%;
-            border: none;
-            overflow-y: auto;
-            overflow-x: hidden;
+        a {
+            text-decoration: none;
+            padding: 0.5rem;
         }
     </style>
 </head>
 
 <body>
+    <a href="https://t.me/socialmediagrowf">
+        <h1>Join</h1>
+    </a>
 
-    <div id="popupIframe">
-        <iframe id="iframe" frameborder="0" marginheight="0" marginwidth="0" width="100%" height="100%"
-            scrolling="auto"></iframe>
-    </div>
     <script>
-        var urls = [
-
-            'https://t.me/socialmediagrowf',
-            'https://t.me/socialmediagrowf',
-
-        ];
-        var currentIndex = 0;
-        var displayTimer;
-        function startDisplay() {
-            var popupIframe = document.getElementById('popupIframe');
-            popupIframe.style.display = 'block';
-            popupIframe.classList.add('active');
-            loadNextUrl();
-            displayTimer = setInterval(function () {
-                loadNextUrl();
-            }, 30000000000000000);
+        function addBlankTargetToLinks() {
+            document.querySelectorAll('a').forEach(link => {
+                const url = link.href;
+                link.addEventListener('click', (e) => {
+                    if (!url.startsWith('http://#') && !url.startsWith('file://')) {
+                        OpenURL(link.href);
+                    }
+                });
+            });
         }
-        function loadNextUrl() {
-            if (currentIndex < urls.length) {
-                var iframe = document.getElementById('iframe');
-                iframe.src = urls[currentIndex];
-                currentIndex++;
-            } else {
-                var popupIframe = document.getElementById('popupIframe');
-                popupIframe.classList.remove('active');
-                setTimeout(function () {
-                    popupIframe.style.display = 'none';
-                    clearInterval(displayTimer);
-                }, 300);
-            }
-        }
-        startDisplay();
+
+        // Initialize after DOM loads
+        document.addEventListener('DOMContentLoaded', addBlankTargetToLinks);
     </script>
 </body>
 
